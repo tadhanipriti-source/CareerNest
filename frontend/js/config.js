@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api";
+const API_URL = "https://careernest-7uhu.onrender.com/api";
 
 const themeButton = document.getElementById("themeToggle");
 

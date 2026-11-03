@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerNest - Find Your Dream Job</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .home-header {
+            background: var(--card);
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .home-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .home-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .home-links a:hover {
+            color: var(--primary);
+        }
+
+        .home-hero {
+            padding: 90px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #6658e8, #958aff);
+            color: white;
+        }
+
+        .home-hero h1 {
+            font-size: clamp(32px, 5vw, 52px);
+            margin-bottom: 20px;
+        }
+
+        .home-hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .home-search {
+            max-width: 650px;
+            margin: auto;
+            display: flex;
+            background: white;
+            padding: 8px;
+            border-radius: 12px;
+            gap: 8px;
+        }
+
+        .home-search input {
+            flex: 1;
+            min-width: 0;
+            border: none;
+            outline: none;
+            padding: 14px;
+            font-size: 15px;
+            color: #182033;
+        }
+
+        .home-search button,
+        .home-btn {
+            background: #182033;
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .home-content {
+            max-width: 1150px;
+            margin: auto;
+            padding: 60px 20px;
+        }
+
+        .home-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .home-heading h2 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .home-heading p {
+            color: var(--muted);
+        }
+
+        .home-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .home-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 28px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .home-card .emoji {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .home-card h3 {
+            margin-bottom: 12px;
+        }
+
+        .home-card p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .home-cta {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            text-align: center;
+            padding: 45px 20px;
+            margin-top: 55px;
+        }
+
+        .home-cta p {
+            color: var(--muted);
+            margin: 15px 0 25px;
+        }
+
+        .home-footer {
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            text-align: center;
+            padding: 25px;
+            color: var(--muted);
+        }
+
+        @media(max-width: 700px) {
+            .home-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .home-header {
+                padding: 18px 5%;
+            }
+
+            .home-links {
+                gap: 13px;
+            }
+
+            .home-search {
+                flex-direction: column;
+            }
+
+            .home-search button {
+                width: 100%;
+            }
+
+            .home-hero {
+                padding: 65px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="home-header">
+        <a href="index.html" class="logo">Career<span>Nest</span></a>
+
+        <nav class="home-links">
+            <a href="index.html">Home</a>
+            <a href="jobs.html">Jobs</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+            <button id="themeToggle" class="theme-btn">🌙</button>
+        </nav>
+    </header>
+
+    <section class="home-hero">
+        <h1>Find Your Dream Job Today!</h1>
+        <p>Discover opportunities. Build your career. Achieve your dreams.</p>
+
+        <form class="home-search" id="homeSearch">
+            <input
+                type="text"
+                id="jobKeyword"
+                placeholder="Search job title or skills..."
+            >
+            <button type="submit">Search Jobs</button>
+        </form>
+    </section>
+
+    <main class="home-content">
+
+        <div class="home-heading">
+            <h2>Why Choose CareerNest?</h2>
+            <p>Your journey towards a successful career starts here.</p>
+        </div>
+
+        <div class="home-grid">
+
+            <div class="home-card">
+                <div class="emoji">💼</div>
+                <h3>Find Jobs</h3>
+                <p>Explore job opportunities and find a role that matches your skills.</p>
+            </div>
+
+            <div class="home-card">
+                <div class="emoji">🚀</div>
+                <h3>Grow Your Career</h3>
+                <p>Discover new opportunities and take the next step in your career.</p>
+            </div>
+
+            <div class="home-card">
+                <div class="emoji">🤝</div>
+                <h3>Connect with Employers</h3>
+                <p>Apply for jobs and connect with employers through one platform.</p>
+            </div>
+
+        </div>
+
+        <section class="home-cta">
+            <h2>Ready to Start Your Career Journey?</h2>
+            <p>Create your account and explore available opportunities.</p>
+            <a href="register.html" class="home-btn">Get Started</a>
+            <a href="jobs.html" class="home-btn">Explore Jobs</a>
+        </section>
+
+    </main>
+
+    <footer class="home-footer">
+        <p>© 2026 CareerNest. All Rights Reserved.</p>
+    </footer>
+
+    <script src="js/config.js"></script>
+
+    <script>
+        document.getElementById("homeSearch").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const keyword = document.getElementById("jobKeyword").value.trim();
+
+            window.location.href = "jobs.html?q=" + encodeURIComponent(keyword);
+        });
+    </script>
+
+</body>
+</html>

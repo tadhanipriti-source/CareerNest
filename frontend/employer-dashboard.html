@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerNest - Employer Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .job-form {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .job-form.show {
+            display: block;
+        }
+
+        .job-form input,
+        .job-form textarea,
+        .job-form select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--input);
+            color: var(--text);
+            box-sizing: border-box;
+        }
+
+        .job-form label {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .job-card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .job-card h3 {
+            color: var(--text);
+        }
+
+        .job-card p {
+            color: var(--muted);
+        }
+
+        .job-card button {
+            padding: 9px 15px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* Applicants Section */
+        .applicant-card {
+            background: var(--card);
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        .applicant-card h3 {
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .applicant-card p {
+            color: var(--muted);
+            margin: 8px 0;
+            overflow-wrap: anywhere;
+        }
+
+        .applicant-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            background: var(--input);
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .applicant-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .applicant-actions button {
+            padding: 9px 14px;
+            border: none;
+            border-radius: 7px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .shortlist-btn {
+            background: #16a34a;
+        }
+
+        .reject-btn {
+            background: #dc2626;
+        }
+
+        .select-btn {
+            background: #2563eb;
+        }
+
+        .review-btn {
+            background: #64748b;
+        }
+
+        .applicant-actions button:hover {
+            opacity: 0.85;
+        }
+
+        .applicants-job-heading {
+            color: var(--text);
+            margin-top: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .empty-applicants {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 15px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        @media(max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .applicant-actions {
+                flex-direction: column;
+            }
+
+            .applicant-actions button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="dashboard-header">
+    <div class="container">
+        <nav class="dashboard-nav">
+
+            <a href="index.html" class="logo">CareerNest</a>
+
+            <div>
+                <a href="jobs.html">All Jobs</a>
+                <a href="profile.html">Company Profile</a>
+
+                <button id="themeToggle" class="theme-btn">🌙</button>
+
+                <button onclick="logout()" class="logout-btn">
+                    Logout
+                </button>
+            </div>
+
+        </nav>
+    </div>
+</header>
+
+
+<main class="dashboard-container">
+
+    <!-- Welcome Section -->
+    <section class="dashboard-welcome">
+
+        <h1>
+            Welcome, <span id="userName">Employer</span>! 👋
+        </h1>
+
+        <p>
+            Manage your job postings and find the right candidates.
+        </p>
+
+    </section>
+
+
+    <!-- Statistics -->
+    <section class="stats-grid">
+
+        <div class="stat-card">
+            <h3>Total Jobs Posted</h3>
+            <h2 id="totalJobs">0</h2>
+        </div>
+
+        <div class="stat-card">
+            <h3>Total Applicants</h3>
+            <h2 id="totalApplicants">0</h2>
+        </div>
+
+        <div class="stat-card">
+            <h3>Active Jobs</h3>
+            <h2 id="activeJobs">0</h2>
+        </div>
+
+    </section>
+
+
+    <!-- Post Job Section -->
+    <section class="dashboard-section">
+
+        <h2>Post a New Job 🚀</h2>
+
+        <button class="primary-btn" onclick="toggleJobForm()">
+            + Post a Job
+        </button>
+
+        <form id="jobForm" class="job-form">
+
+            <h2>Create Job Opportunity</h2>
+
+            <label>Job Title *</label>
+            <input
+                type="text"
+                id="jobTitle"
+                placeholder="Example: Python Developer"
+                required
+            >
+
+            <div class="form-grid">
+
+                <div>
+                    <label>Company Name *</label>
+                    <input
+                        type="text"
+                        id="companyName"
+                        placeholder="Company name"
+                        required
+                    >
+                </div>
+
+                <div>
+                    <label>Location *</label>
+                    <input
+                        type="text"
+                        id="jobLocation"
+                        placeholder="Surat, Gujarat"
+                        required
+                    >
+                </div>
+
+                <div>
+                    <label>Job Type</label>
+                    <select id="jobType">
+                        <option>Full Time</option>
+                        <option>Part Time</option>
+                        <option>Internship</option>
+                        <option>Remote</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Salary</label>
+                    <input
+                        type="text"
+                        id="jobSalary"
+                        placeholder="₹15,000 - ₹25,000"
+                    >
+                </div>
+
+                <div>
+                    <label>Experience</label>
+                    <input
+                        type="text"
+                        id="jobExperience"
+                        placeholder="Fresher / 1-2 Years"
+                    >
+                </div>
+
+                <div>
+                    <label>Skills</label>
+                    <input
+                        type="text"
+                        id="jobSkills"
+                        placeholder="Python, JavaScript, HTML"
+                    >
+                </div>
+
+            </div>
+
+            <label>Job Description *</label>
+
+            <textarea
+                id="jobDescription"
+                rows="5"
+                placeholder="Write job description..."
+                required
+            ></textarea>
+
+            <label>Requirements</label>
+
+            <textarea
+                id="jobRequirements"
+                rows="3"
+                placeholder="Enter requirements separated by commas"
+            ></textarea>
+
+            <button type="submit" class="primary-btn">
+                Publish Job 🚀
+            </button>
+
+            <button
+                type="button"
+                class="logout-btn"
+                onclick="toggleJobForm()"
+            >
+                Cancel
+            </button>
+
+            <p id="jobMessage" class="message"></p>
+
+        </form>
+
+    </section>
+
+
+    <!-- My Job Listings -->
+    <section class="dashboard-section">
+
+        <h2>My Job Listings</h2>
+
+        <div id="myJobs">
+            <p>Loading jobs...</p>
+        </div>
+
+    </section>
+
+
+    <!-- Job Applicants Section -->
+    <section class="dashboard-section">
+
+        <h2>👥 Job Applicants</h2>
+
+        <p>
+            View candidates who applied for your jobs and update
+            their application status.
+        </p>
+
+        <div id="jobApplicants">
+
+            <div class="empty-applicants">
+                <p>Loading applicants...</p>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="js/config.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/jobs.js"></script>
+
+</body>
+</html>

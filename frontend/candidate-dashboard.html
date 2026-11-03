@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CareerNest - Candidate Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="dashboard-header">
+
+        <div class="container">
+
+            <nav class="dashboard-nav">
+
+                <a href="index.html" class="logo">
+                    Career<span>Nest</span>
+                </a>
+
+                <div>
+                    <a href="candidate-dashboard.html">Dashboard</a>
+
+                    <a href="jobs.html">Find Jobs</a>
+
+                    <a href="profile.html">My Profile</a>
+
+                    <button id="themeToggle" class="theme-btn">
+                        🌙
+                    </button>
+
+                    <button class="logout-btn" onclick="logout()">
+                        Logout
+                    </button>
+                </div>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="dashboard-container">
+
+        <!-- Welcome Section -->
+        <section class="dashboard-welcome">
+
+            <h1>
+                Welcome, <span id="userName">Candidate</span>! 👋
+            </h1>
+
+            <p>
+                Find your dream job and grow your career with CareerNest.
+            </p>
+
+        </section>
+
+        <!-- Statistics -->
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <h3>Available Jobs</h3>
+                <h2 id="availableJobs">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <h3>Applied Jobs</h3>
+                <h2 id="appliedJobs">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <h3>Shortlisted</h3>
+                <h2 id="shortlistedJobs">0</h2>
+            </div>
+
+        </section>
+
+        <!-- Find Jobs -->
+        <section class="dashboard-section">
+
+            <h2>Find Your Dream Job 💼</h2>
+
+            <div class="empty-state">
+
+                <span>🔍</span>
+
+                <h3>Explore New Opportunities</h3>
+
+                <p>
+                    Discover jobs that match your skills and interests.
+                </p>
+
+                <br>
+
+                <a href="jobs.html"
+                    class="primary-btn"
+                    style="display:inline-block;width:auto;text-decoration:none">
+
+                    Browse Jobs
+
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- My Recent Applications -->
+        <section class="dashboard-section">
+
+            <h2>My Recent Applications 📄</h2>
+
+            <div id="myApplications">
+
+                <div class="empty-state">
+
+                    <span>📄</span>
+
+                    <h3>Loading Applications...</h3>
+
+                    <p>Your applied jobs will appear here.</p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JavaScript -->
+    <script src="js/config.js"></script>
+    <script src="js/dashboard.js"></script>
+
+</body>
+
+</html>

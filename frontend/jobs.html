@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerNest - All Jobs</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="dashboard-header">
+    <div class="container">
+        <nav class="dashboard-nav">
+
+            <a href="index.html" class="logo">CareerNest</a>
+
+            <div>
+                <a href="#" id="dashboardLink">Dashboard</a>
+                <a href="jobs.html">Find Jobs</a>
+                <a href="profile.html">My Profile</a>
+
+                <button id="themeToggle" class="theme-btn">🌙</button>
+
+                <button class="logout-btn" onclick="logout()">
+                    Logout
+                </button>
+            </div>
+
+        </nav>
+    </div>
+</header>
+
+<main class="dashboard-container">
+
+    <section class="dashboard-welcome">
+        <h1>Explore All Jobs 💼</h1>
+        <p>Discover the latest job opportunities on CareerNest.</p>
+    </section>
+
+    <input
+        type="text"
+        id="searchJobs"
+        placeholder="Search job title or company..."
+        style="width:100%;padding:14px;border-radius:10px;
+        border:1px solid var(--border);background:var(--input);
+        color:var(--text);margin-bottom:20px;"
+    >
+
+    <div id="allJobs">
+        <p>Loading jobs...</p>
+    </div>
+
+</main>
+
+<script src="js/config.js"></script>
+
+<script>
+const token = localStorage.getItem("careerNestToken");
+const user = JSON.parse(localStorage.getItem("careerNestUser") || "null");
+
+if (!token || !user) {
+    window.location.href = "login.html";
+}
+
+const dashboardLink = document.getElementById("dashboardLink");
+
+if (user && user.role === "employer") {
+    dashboardLink.href = "employer-dashboard.html";
+} else {
+    dashboardLink.href = "candidate-dashboard.html";
+}
+
+function logout() {
+    localStorage.removeItem("careerNestToken");
+    localStorage.removeItem("careerNestUser");
+    window.location.href = "login.html";
+}
+</script>
+
+<script src="js/public-jobs.js"></script>
+<script src="js/applications.js"></script>
+
+</body>
+</html>

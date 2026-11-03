@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerNest - Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="auth-header">
+        <a href="index.html" class="logo">Career<span>Nest</span></a>
+        <button id="themeToggle" class="theme-btn">🌙</button>
+    </header>
+
+    <main class="auth-container">
+
+        <div class="auth-card">
+
+            <div class="auth-icon">👋</div>
+
+            <h1>Welcome Back!</h1>
+
+            <p class="auth-subtitle">
+                Login to continue your career journey
+            </p>
+
+            <div id="message" class="message"></div>
+
+            <form id="loginForm">
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+
+                    <div class="password-box">
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            required>
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            onclick="togglePassword('password', this)">
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="primary-btn" id="loginBtn">
+                    Login
+                </button>
+
+            </form>
+
+            <p class="auth-footer">
+                Don't have an account?
+                <a href="register.html">Create Account</a>
+            </p>
+
+            <p class="auth-footer">
+                <a href="index.html">← Back to Home</a>
+            </p>
+
+        </div>
+
+    </main>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+
+</body>
+</html>

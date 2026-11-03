@@ -1,0 +1,604 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerNest - My Profile</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #111827;
+            min-height: 100vh;
+            color: #1f2937;
+        }
+
+        .header {
+            background: #fff;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,.1);
+        }
+
+        .logo {
+            color: #2563eb;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #374151;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        nav button {
+            padding: 9px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background: #2563eb;
+            color: white;
+        }
+
+        .profile-container {
+            width: 90%;
+            max-width: 750px;
+            margin: 45px auto;
+        }
+
+        .page-title {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .profile-card {
+            background: white;
+            color: #1f2937;
+            padding: 30px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.2);
+        }
+
+        .profile-card h2 {
+            color: #2563eb;
+            margin-bottom: 22px;
+            font-size: 22px;
+        }
+
+        .profile-info {
+            margin: 18px 0;
+            font-size: 16px;
+            color: #374151;
+            overflow-wrap: anywhere;
+        }
+
+        .profile-info strong {
+            display: inline-block;
+            width: 90px;
+            color: #111827;
+        }
+
+        .profile-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .profile-form label {
+            font-weight: bold;
+            color: #374151;
+        }
+
+        .profile-form input,
+        .profile-form textarea,
+        .resume-form input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            background: white;
+            color: #111827;
+            margin-top: 7px;
+        }
+
+        .profile-form textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .upload-btn {
+            padding: 13px;
+            border: none;
+            border-radius: 7px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .upload-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .upload-btn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+
+        .resume-description {
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .resume-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #profileMessage,
+        #resumeMessage {
+            margin-top: 15px;
+            font-weight: 600;
+            overflow-wrap: anywhere;
+        }
+
+        #currentResume {
+            margin-top: 20px;
+            color: #374151;
+        }
+
+        .resume-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #16a34a;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            margin-top: 30px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        body.dark-mode {
+            background: #030712;
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px;
+            }
+
+            .profile-container {
+                width: 94%;
+                margin: 25px auto;
+            }
+
+            .profile-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">CareerNest</div>
+
+    <nav>
+        <a href="candidate-dashboard.html">Dashboard</a>
+        <a href="jobs.html">All Jobs</a>
+        <button id="themeToggle" type="button">🌙</button>
+        <button id="logoutBtn" type="button">Logout</button>
+    </nav>
+</header>
+
+<main class="profile-container">
+
+    <h1 class="page-title">My Profile</h1>
+
+    <div id="loadingMessage" class="loading">
+        Loading profile...
+    </div>
+
+    <section id="profileContent" class="hidden">
+
+        <!-- PERSONAL INFORMATION -->
+        <div class="profile-card">
+            <h2>Personal Information</h2>
+
+            <p class="profile-info">
+                <strong>Name:</strong>
+                <span id="profileName">-</span>
+            </p>
+
+            <p class="profile-info">
+                <strong>Email:</strong>
+                <span id="profileEmail">-</span>
+            </p>
+
+            <p class="profile-info">
+                <strong>Role:</strong>
+                <span id="profileRole">-</span>
+            </p>
+        </div>
+
+        <!-- EDIT PROFILE -->
+        <div class="profile-card hidden" id="editProfileSection">
+            <h2>Edit Your Profile</h2>
+
+            <form id="profileForm" class="profile-form">
+
+                <label>
+                    Phone Number
+                    <input
+                        type="tel"
+                        id="phone"
+                        placeholder="Enter your phone number"
+                        maxlength="15"
+                    >
+                </label>
+
+                <label>
+                    Skills
+                    <textarea
+                        id="skills"
+                        placeholder="Example: Python, HTML, CSS, JavaScript, SQL"
+                    ></textarea>
+                </label>
+
+                <button type="submit" class="upload-btn" id="saveProfileBtn">
+                    Save Profile
+                </button>
+
+            </form>
+
+            <p id="profileMessage"></p>
+        </div>
+
+        <!-- RESUME UPLOAD -->
+        <div class="profile-card hidden" id="resumeSection">
+            <h2>Upload Your Resume</h2>
+
+            <p class="resume-description">
+                Upload your latest resume in PDF format.
+                Maximum file size is 5 MB.
+            </p>
+
+            <form id="resumeForm" class="resume-form">
+
+                <input
+                    type="file"
+                    id="resumeFile"
+                    accept=".pdf,application/pdf"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="upload-btn"
+                    id="uploadBtn">
+                    Upload Resume
+                </button>
+
+            </form>
+
+            <p id="resumeMessage"></p>
+            <div id="currentResume"></div>
+        </div>
+
+        <!-- EMPLOYER SECTION -->
+        <div class="profile-card hidden" id="employerSection">
+            <h2>Company Profile</h2>
+            <p>You are logged in as an employer.</p>
+        </div>
+
+    </section>
+</main>
+
+<script>
+    const API_URL = "http://localhost:5000/api";
+    const token = localStorage.getItem("careerNestToken");
+
+    const loadingMessage = document.getElementById("loadingMessage");
+    const profileContent = document.getElementById("profileContent");
+
+    const profileName = document.getElementById("profileName");
+    const profileEmail = document.getElementById("profileEmail");
+    const profileRole = document.getElementById("profileRole");
+
+    const editProfileSection = document.getElementById("editProfileSection");
+    const employerSection = document.getElementById("employerSection");
+    const resumeSection = document.getElementById("resumeSection");
+
+    const profileForm = document.getElementById("profileForm");
+    const phoneInput = document.getElementById("phone");
+    const skillsInput = document.getElementById("skills");
+    const saveProfileBtn = document.getElementById("saveProfileBtn");
+    const profileMessage = document.getElementById("profileMessage");
+
+    const resumeForm = document.getElementById("resumeForm");
+    const resumeFile = document.getElementById("resumeFile");
+    const uploadBtn = document.getElementById("uploadBtn");
+    const resumeMessage = document.getElementById("resumeMessage");
+    const currentResume = document.getElementById("currentResume");
+
+    if (!token) {
+        window.location.href = "login.html";
+    }
+
+    // LOAD PROFILE
+    async function loadProfile() {
+        try {
+            const response = await fetch(`${API_URL}/auth/me`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            const data = await response.json();
+
+            if (response.status === 401) {
+                localStorage.removeItem("careerNestToken");
+                localStorage.removeItem("careerNestUser");
+                window.location.href = "login.html";
+                return;
+            }
+
+            if (!response.ok || !data.success || !data.user) {
+                throw new Error(data.message || "Unable to load profile.");
+            }
+
+            const user = data.user;
+
+            profileName.textContent = user.name || "Not available";
+            profileEmail.textContent = user.email || "Not available";
+            profileRole.textContent = user.role || "Not available";
+
+            profileContent.classList.remove("hidden");
+            loadingMessage.classList.add("hidden");
+
+            if (user.role === "jobseeker") {
+                editProfileSection.classList.remove("hidden");
+                resumeSection.classList.remove("hidden");
+
+                phoneInput.value = user.phone || "";
+
+                skillsInput.value = Array.isArray(user.skills)
+                    ? user.skills.join(", ")
+                    : "";
+
+                if (user.resume) {
+                    const resumeURL = user.resume.startsWith("http")
+                        ? user.resume
+                        : `http://localhost:5000/${user.resume.replace(/^\/+/, "")}`;
+
+                    currentResume.innerHTML = `
+                        <p><strong>Current Resume:</strong> Uploaded</p>
+                        <a
+                            href="${resumeURL}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="resume-link">
+                            View Resume
+                        </a>
+                    `;
+                } else {
+                    currentResume.innerHTML = "<p>No resume uploaded yet.</p>";
+                }
+
+            } else if (user.role === "employer") {
+                employerSection.classList.remove("hidden");
+            }
+
+        } catch (error) {
+            loadingMessage.textContent = error.message;
+            loadingMessage.style.color = "#f87171";
+        }
+    }
+
+    // SAVE PROFILE
+    profileForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const phone = phoneInput.value.trim();
+        const skills = skillsInput.value
+            .split(",")
+            .map(skill => skill.trim())
+            .filter(skill => skill.length > 0);
+
+        try {
+            saveProfileBtn.disabled = true;
+            saveProfileBtn.textContent = "Saving...";
+            profileMessage.textContent = "";
+
+            const response = await fetch(`${API_URL}/auth/profile`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    phone,
+                    skills
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.status === 401) {
+                localStorage.removeItem("careerNestToken");
+                localStorage.removeItem("careerNestUser");
+                window.location.href = "login.html";
+                return;
+            }
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.message || "Profile update failed.");
+            }
+
+            profileMessage.textContent = "Profile updated successfully!";
+            profileMessage.style.color = "green";
+
+            phoneInput.value = data.user.phone || "";
+            skillsInput.value = Array.isArray(data.user.skills)
+                ? data.user.skills.join(", ")
+                : "";
+
+        } catch (error) {
+            profileMessage.textContent = error.message;
+            profileMessage.style.color = "red";
+
+        } finally {
+            saveProfileBtn.disabled = false;
+            saveProfileBtn.textContent = "Save Profile";
+        }
+    });
+
+    // UPLOAD RESUME
+    resumeForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const file = resumeFile.files[0];
+
+        if (!file) {
+            resumeMessage.textContent = "Please select a PDF file.";
+            resumeMessage.style.color = "red";
+            return;
+        }
+
+        if (
+            file.type !== "application/pdf" ||
+            !file.name.toLowerCase().endsWith(".pdf")
+        ) {
+            resumeMessage.textContent = "Only PDF files are allowed.";
+            resumeMessage.style.color = "red";
+            return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+            resumeMessage.textContent = "File size must be less than 5 MB.";
+            resumeMessage.style.color = "red";
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("resume", file);
+
+        try {
+            uploadBtn.disabled = true;
+            uploadBtn.textContent = "Uploading...";
+            resumeMessage.textContent = "";
+
+            const response = await fetch(`${API_URL}/resume/upload`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.status === 401) {
+                localStorage.removeItem("careerNestToken");
+                localStorage.removeItem("careerNestUser");
+                window.location.href = "login.html";
+                return;
+            }
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.message || "Resume upload failed.");
+            }
+
+            resumeMessage.textContent = "Resume uploaded successfully!";
+            resumeMessage.style.color = "green";
+
+            resumeForm.reset();
+            await loadProfile();
+
+        } catch (error) {
+            resumeMessage.textContent = error.message;
+            resumeMessage.style.color = "red";
+
+        } finally {
+            uploadBtn.disabled = false;
+            uploadBtn.textContent = "Upload Resume";
+        }
+    });
+
+    // THEME TOGGLE
+    const themeToggle = document.getElementById("themeToggle");
+    const savedTheme = localStorage.getItem("careerNestTheme");
+
+    if (savedTheme === "dark") {
+        document.body.classList.add("dark-mode");
+        themeToggle.textContent = "☀️";
+    }
+
+    themeToggle.addEventListener("click", function() {
+        document.body.classList.toggle("dark-mode");
+
+        const isDark = document.body.classList.contains("dark-mode");
+
+        localStorage.setItem(
+            "careerNestTheme",
+            isDark ? "dark" : "light"
+        );
+
+        themeToggle.textContent = isDark ? "☀️" : "🌙";
+    });
+
+    // LOGOUT
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+        localStorage.removeItem("careerNestToken");
+        localStorage.removeItem("careerNestUser");
+        window.location.href = "login.html";
+    });
+
+    // START
+    if (token) {
+        loadProfile();
+    }
+</script>
+
+</body>
+</html>
